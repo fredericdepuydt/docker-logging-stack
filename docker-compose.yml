@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  syslog:
+    image: linuxserver/syslog-ng
+    container_name: syslog
+    cap_add:
+      - NET_ADMIN
+    networks:
+      automation:
+        ipv4_address: 192.168.5.141
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./config/syslog:/config
+      - ./log:/var/log #optional
+    restart: unless-stopped
+
+networks:
+  automation:
+    external: true
